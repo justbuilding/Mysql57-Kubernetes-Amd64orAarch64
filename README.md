@@ -7,9 +7,15 @@ This repository contains Kubernetes deployment configurations for MySQL database
 ```
 .
 ├── mysql-5.7-amd64/         # MySQL 5.7 for AMD64 architecture
+│   ├── README.md             # Deployment-specific documentation
+│   └── Kubernetes files
 ├── mysql-5.7-arm64/         # MySQL 5.7 for ARM64 architecture
+│   ├── README.md             # Deployment-specific documentation
+│   └── Kubernetes files
 ├── mysql-9.6.0-arm64/        # MySQL 9.6.0 for ARM64 architecture
-├── README.md                 # This file
+│   ├── README.md             # Deployment-specific documentation
+│   └── Kubernetes files
+├── README.md                 # Main documentation
 └── USAGE.md                  # General usage documentation
 ```
 
