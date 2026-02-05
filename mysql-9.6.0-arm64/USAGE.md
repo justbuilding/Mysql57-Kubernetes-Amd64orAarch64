@@ -5,7 +5,7 @@
 ## 架构兼容性
 
 **重要**：此配置专为 ARM64 (aarch64) 架构的服务器优化。
-- 使用官方 `arm64v8/mysql:9.6.0` 镜像
+- 使用阿里云容器镜像服务提供的 `registry.cn-hangzhou.aliyuncs.com/public_hjj_images/mysql9.6.0:arm64` 镜像
 - 完全支持 ARM64 架构，包括飞腾、鲲鹏等国产处理器
 - 如需在 amd64 服务器上部署 MySQL 5.7，请使用 `mysql-5.7-amd64` 目录中的配置
 
@@ -276,7 +276,7 @@ kubectl delete pv mysql-pv
 
 ---
 
-本部署方案基于 arm64 架构，使用 `arm64v8/mysql:9.6.0` 镜像，适用于 ARM 架构的服务器。
+本部署方案基于 arm64 架构，使用 `registry.cn-hangzhou.aliyuncs.com/public_hjj_images/mysql9.6.0:arm64` 镜像，适用于 ARM 架构的服务器。
 
 ## MySQL 9.6.0 特性
 

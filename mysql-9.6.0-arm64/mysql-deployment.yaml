@@ -17,10 +17,10 @@ spec:
       containers:
       - name: mysql
         # MySQL 9.6.0 for ARM64 (aarch64) architecture
-        # Official ARM64 support
+        # From Alibaba Cloud Registry
         # This image is compatible with ARM64 servers
-        # For amd64 architecture, use mysql-5.7-amd64 directory
-        image: arm64v8/mysql:9.6.0
+        # Source: registry.cn-hangzhou.aliyuncs.com/public_hjj_images/mysql9.6.0:arm64
+        image: registry.cn-hangzhou.aliyuncs.com/public_hjj_images/mysql9.6.0:arm64
         ports:
         - containerPort: 3306
         env:
