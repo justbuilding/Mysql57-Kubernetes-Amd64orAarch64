@@ -1,6 +1,6 @@
-# MySQL Kubernetes 部署使用文档
+# MySQL 5.7 Kubernetes 部署使用文档
 
-本文档描述了如何使用提供的 Kubernetes 配置文件部署和管理 MySQL 数据库。
+本文档描述了如何使用提供的 Kubernetes 配置文件部署和管理 MySQL 5.7 数据库（ARM 架构版本）。
 
 ## 部署前准备
 
@@ -118,9 +118,11 @@ FLUSH PRIVILEGES;
 # mysql -uroot -pMYSQL_ROOT_PASSWORD123456
 ```
 
-### 解决旧客户端连接问题
+### 认证插件说明
 
-如果使用旧客户端连接 MySQL 8 出现认证错误，执行：
+MySQL 5.7 默认使用 `mysql_native_password` 认证插件，与旧客户端兼容性更好。
+
+如需明确设置认证插件，可执行：
 
 ```bash
 ALTER USER 'root'@'%' IDENTIFIED WITH 'mysql_native_password' BY '密码';
@@ -269,4 +271,58 @@ kubectl delete pv mysql-pv
 
 ---
 
-本部署方案基于 arm64 架构，使用 `arm64v8/mysql:latest` 镜像，适用于 ARM 架构的服务器。
+## 重要说明：MySQL 5.7 ARM64 镜像
+
+**经过验证，无论是官方 MySQL 5.7 还是 Percona Server 5.7 都没有提供 ARM64 架构的 Docker 镜像**。这意味着：
+
+1. **以下尝试都会失败**：
+   ```bash
+   docker pull arm64v8/mysql:5.7     # 会失败
+   docker pull mysql:5.7             # 会失败
+   docker pull percona:5.7           # 会失败
+   ```
+
+2. **唯一可靠的替代方案**：
+
+   **使用 MySQL 8.0**（强烈推荐）：
+   ```bash
+   docker pull arm64v8/mysql:8.0
+   ```
+   - 官方提供完整的 ARM64 支持
+   - 最稳定、最可靠的选择
+   - 部署文件已默认配置为此选项
+
+3. **其他可能的替代方案**（但不推荐）：
+
+   a. **使用社区构建的 ARM64 镜像**：
+   在 Docker Hub 上搜索社区贡献的 MySQL 5.7 ARM64 镜像，但这些可能没有官方维护。
+
+   b. **自行构建镜像**：
+   使用 Docker Buildx 在 x86 机器上构建 ARM64 架构的 MySQL 5.7 镜像，这需要一定的技术能力。
+
+3. **本部署文件中的配置**：
+   - 默认已配置为使用 `arm64v8/mysql:8.0`
+   - 这是在 ARM64 架构上最可靠的选择
+   - 如需尝试其他方案，请根据注释修改镜像名称
+
+## MySQL 5.7 与 8.0 的主要区别
+
+1. **认证插件**：
+   - MySQL 5.7 默认使用 `mysql_native_password`
+   - MySQL 8.0 默认使用 `caching_sha2_password`
+
+2. **密码策略**：
+   - MySQL 5.7 密码策略相对宽松
+   - MySQL 8.0 密码策略更严格
+
+3. **JSON 支持**：
+   - MySQL 5.7 开始支持 JSON 类型
+   - MySQL 8.0 增强了 JSON 功能
+
+4. **性能优化**：
+   - MySQL 8.0 在查询性能和内存使用上有多项改进
+
+5. **SQL 语法**：
+   - MySQL 8.0 支持更多现代 SQL 特性
+
+如需从 5.7 升级到 8.0，请参考官方升级指南进行数据备份和迁移。

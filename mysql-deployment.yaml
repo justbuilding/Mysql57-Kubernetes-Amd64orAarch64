@@ -16,12 +16,15 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: arm64v8/mysql:latest
+        # Use MySQL 9.6.0 to match existing data version
+        # The persistent volume already contains data from MySQL 9.6.0
+        # Using an older version will cause downgrade errors
+        image: arm64v8/mysql:9.6.0
         ports:
         - containerPort: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: "MYSQL_ROOT_PASSWORD123456"
+          value: "123456"
         args:
         - "--lower-case-table-names=1"
         - "--character-set-server=utf8mb4"
