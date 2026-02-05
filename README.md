@@ -1,4 +1,4 @@
-# MySQL Kubernetes Deployments for Aarch64 (Kylin10)
+# MySQL Kubernetes Deployments for Aarch64 (Kylin10) Or Amd64 (Ubuntu/Centos)
 
 This repository contains Kubernetes deployment configurations for MySQL databases optimized for ARM64 architecture, specifically for KylinOS V10 on Aarch64 servers.
 
