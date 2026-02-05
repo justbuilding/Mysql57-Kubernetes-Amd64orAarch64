@@ -16,19 +16,31 @@ spec:
     spec:
       containers:
       - name: mysql
-        # Custom-built MySQL 5.7 image based on ubuntu:26.04
-        # Build this image first using: docker build -t mysql:5.7-custom .
-        # For ARM64 support, use mysql-9.6.0-arm directory
-        image: mysql:5.7-custom
+        # Community-built MySQL 5.7 ARM64 image
+        # This image provides MySQL 5.7 support for ARM64 architecture
+        # Source: https://hub.docker.com/r/berkansahin/mysql57arm64
+        image: berkansahin/mysql57arm64
         ports:
         - containerPort: 3306
+        - containerPort: 33060
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: "123456"
-        args:
-        - "--lower-case-table-names=1"
-        - "--character-set-server=utf8mb4"
-        - "--collation-server=utf8mb4_general_ci"
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: MYSQL_MAJOR
+          value: "5.7"
+        - name: MYSQL_VERSION
+          value: "5.7.26"
+        command:
+        - mysqld
+        - --skip-grant-tables
+        - --user=mysql
+        - --lower-case-table-names=1
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_general_ci
+        - --skip-host-cache
+        - --skip-name-resolve
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
