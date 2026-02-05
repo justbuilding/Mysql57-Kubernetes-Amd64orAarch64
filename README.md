@@ -61,13 +61,22 @@ kubectl apply -f mysql-service.yaml
 - **NodePort**：30306
 - **服务类型**：NodePort
 
-## 环境变量
+## 环境变量与密码配置
 
-### MySQL 5.7
-- `MYSQL_ROOT_PASSWORD`：root 用户密码（默认：空）
+### MySQL 5.7 (AMD64)
+- **密码类型**：root 密码
+- **默认密码**：root
+- **环境变量**：`MYSQL_ROOT_PASSWORD`
 
-### MySQL 9.6.0
-- `MYSQL_ROOT_PASSWORD`：root 用户密码（默认：123456）
+### MySQL 5.7 (ARM64)
+- **密码类型**：空密码
+- **默认密码**：无（直接登录）
+- **环境变量**：无需设置密码环境变量
+
+### MySQL 9.6.0 (ARM64)
+- **密码类型**：root 密码
+- **默认密码**：123456
+- **环境变量**：`MYSQL_ROOT_PASSWORD`
 
 ## 版本兼容性
 
